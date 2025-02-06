@@ -10,6 +10,7 @@ var savedPostersBtn = document.querySelector('.show-saved')
 var savedPosterPage = document.querySelector('.saved-posters')
 var TakeMeBackBtn = document.querySelector('.show-main')
 var BackToMainBtn = document.querySelector('.back-to-main')
+var showMyPosterBtn = document.querySelector('.make-poster')
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
 var images = [
@@ -119,6 +120,8 @@ MYOPosterbtn.addEventListener("click", changeToPosterForm)
 savedPostersBtn.addEventListener("click", showSavedPosters)
 TakeMeBackBtn.addEventListener("click", backToMain)
 BackToMainBtn.addEventListener("click", backToMain)
+showMyPosterBtn.addEventListener("click", showMyPoster)
+
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
 function getRandomIndex(array) {
@@ -154,3 +157,6 @@ function createPoster(imageURL, title, quote) {
     quote: quote}
 }
 
+function showMyPoster(){
+  event.preventDefault()
+}
