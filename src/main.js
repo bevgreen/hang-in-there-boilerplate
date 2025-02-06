@@ -1,5 +1,16 @@
 // query selector variables go here 👇
-
+var firstImage = document.querySelector('.poster-img')
+var firstTitle = document.querySelector('.poster-title')
+var firstQuote = document.querySelector('.poster-quote')
+var randomPosterBtn = document.querySelector('.show-random')
+var mainPosterSection = document.querySelector('.main-poster')
+var MYOPosterbtn = document.querySelector('.show-form')
+var posterForm = document.querySelector('.poster-form')
+var savedPostersBtn = document.querySelector('.show-saved')
+var savedPosterPage = document.querySelector('.saved-posters')
+var TakeMeBackBtn = document.querySelector('.show-main')
+var BackToMainBtn = document.querySelector('.back-to-main')
+var showMyPosterBtn = document.querySelector('.make-poster')
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
 var images = [
@@ -103,11 +114,39 @@ var savedPosters = [];
 var currentPoster;
 
 // event listeners go here 👇
+window.addEventListener("load", posterGenerator)
+randomPosterBtn.addEventListener("click", posterGenerator)
+MYOPosterbtn.addEventListener("click", changeToPosterForm)
+savedPostersBtn.addEventListener("click", showSavedPosters)
+TakeMeBackBtn.addEventListener("click", backToMain)
+BackToMainBtn.addEventListener("click", backToMain)
+showMyPosterBtn.addEventListener("click", showMyPoster)
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
+}
+
+function posterGenerator(){
+  firstImage.src = images[getRandomIndex(images)];
+  firstTitle.innerText = titles[getRandomIndex(titles)];
+  firstQuote.innerText = quotes[getRandomIndex(quotes)]
+  currentPoster = createPoster
+}
+
+function changeToPosterForm(){
+  mainPosterSection.classList.add('hidden')
+  posterForm.classList.remove('hidden')
+}
+function showSavedPosters(){
+  mainPosterSection.classList.add('hidden')
+  savedPosterPage.classList.remove('hidden')
+}
+function backToMain(){
+  mainPosterSection.classList.remove('hidden')
+  savedPosterPage.classList.add('hidden')
+  posterForm.classList.add('hidden')
 }
 
 function createPoster(imageURL, title, quote) {
@@ -116,4 +155,8 @@ function createPoster(imageURL, title, quote) {
     imageURL: imageURL, 
     title: title, 
     quote: quote}
+}
+
+function showMyPoster(){
+  event.preventDefault()
 }
