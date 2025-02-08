@@ -14,6 +14,8 @@ var showMyPosterBtn = document.querySelector('.make-poster')
 var userImageUrl = document.querySelector('#poster-image-url')
 var userTitle = document.querySelector('#poster-title')
 var userQuote = document.querySelector('#poster-quote')
+var savePosterBtn = document.querySelector('.save-poster')
+var savedPostersGrd = document.querySelector('.saved-posters-grid')
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
 var images = [
@@ -124,6 +126,7 @@ savedPostersBtn.addEventListener("click", showSavedPosters)
 TakeMeBackBtn.addEventListener("click", backToMain)
 BackToMainBtn.addEventListener("click", backToMain)
 showMyPosterBtn.addEventListener("click", showMyPoster)
+savePosterBtn.addEventListener("click", savePoster )
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -131,11 +134,24 @@ function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
 
+function createPoster(imageURL, title, quote) {
+  return {
+    id: Date.now(), 
+    imageURL: imageURL, 
+    title: title, 
+    quote: quote}
+}
+
 function posterGenerator(){
-  firstImage.src = images[getRandomIndex(images)];
-  firstTitle.innerText = titles[getRandomIndex(titles)];
-  firstQuote.innerText = quotes[getRandomIndex(quotes)]
-  currentPoster = createPoster
+  var imageURL = images[getRandomIndex(images)];
+  var title = titles[getRandomIndex(titles)];
+  var quote = quotes[getRandomIndex(quotes)];
+
+  firstImage.src = imageURL;
+  firstTitle.innerText = title;
+  firstQuote.innerText = quote;
+
+  currentPoster = createPoster(imageURL, title, quote)
 }
 
 function changeToPosterForm(){
@@ -147,13 +163,25 @@ function changeToPosterForm(){
   userTitle.value = "";
   userQuote.value = "";
   posterForm.classList.remove('hidden')
-  
-  // needs code to set input values back to original
 }
+
 function showSavedPosters(){
   mainPosterSection.classList.add('hidden')
   savedPosterPage.classList.remove('hidden')
-}
+  savedPostersGrd.innerHTML = ''
+  
+  savedPosters.forEach(poster => {
+    var posterElement = document.createElement('div');
+    posterElement.classList.add('mini-poster');
+
+    posterElement.innerHTML = `
+      <img src="${poster.imageURL}" alt="${poster.title}">
+      <h2>${poster.title}</h2>
+      <h4>${poster.quote}</h4>`;
+    
+    savedPostersGrd.appendChild(posterElement)})
+  }
+
 function backToMain(){
   mainPosterSection.classList.remove('hidden')
   savedPosterPage.classList.add('hidden')
@@ -161,30 +189,41 @@ function backToMain(){
   posterGenerator()
 }
 
-function createPoster(imageURL, title, quote) {
-  return {
-    id: Date.now(), 
-    imageURL: imageURL, 
-    title: title, 
-    quote: quote}
-}
-
 function showMyPoster(){
   event.preventDefault()
 
-  images.push(userImageUrl)
-  titles.push(userTitle)
-  quotes.push(userQuote)
-
-  imageURL = userImageUrl.value
-  title = userTitle.value
-  quote = userQuote.value
-  userMadePoster = createPoster()
-  // ideally would just call backToMain but wont work? syntax?
-  posterForm.classList.add('hidden')
-  mainPosterSection.classList.remove('hidden')
+  var imageURL = userImageUrl.value
+  var title = userTitle.value
+  var quote = userQuote.value
+  userMadePoster = createPoster(imageURL, title, quote);
 
   firstImage.src = imageURL
   firstTitle.innerText = title
   firstQuote.innerText = quote
+
+  posterForm.classList.add('hidden')
+  mainPosterSection.classList.remove('hidden')
 }
+
+function isDuplicatePoster(currentPoster){
+  return savedPosters.some(poster => poster.id === currentPoster.id)
+}
+function savePoster(){
+  console.log("Save button clicked!");
+  imageURL= firstImage.src
+  title= firstTitle.innerText
+  quote= firstQuote.innerText
+
+  currentPoster = createPoster(imageURL, title, quote)
+  var isDuplicate = isDuplicatePoster(currentPoster)
+
+  if (isDuplicate === false) {
+    // If it's not a duplicate, save the poster
+    savedPosters.push(currentPoster);
+    console.log('Poster saved:', currentPoster);
+  } else {
+    console.log('This poster has already been saved.')
+  savedPosters.push(currentPoster)
+  console.log(savedPosters);
+  }}
+
