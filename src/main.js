@@ -11,6 +11,9 @@ var savedPosterPage = document.querySelector('.saved-posters')
 var TakeMeBackBtn = document.querySelector('.show-main')
 var BackToMainBtn = document.querySelector('.back-to-main')
 var showMyPosterBtn = document.querySelector('.make-poster')
+var userImageUrl = document.querySelector('#poster-image-url')
+var userTitle = document.querySelector('#poster-title')
+var userQuote = document.querySelector('#poster-quote')
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
 var images = [
@@ -137,7 +140,15 @@ function posterGenerator(){
 
 function changeToPosterForm(){
   mainPosterSection.classList.add('hidden')
+  userImageUrl.placeholder = "https://gph.is/2n553Ra"
+  userTitle.placeholder = "Growth Mindset"
+  userQuote.placeholder = "Hang in there!"
+  userImageUrl.value = "";
+  userTitle.value = "";
+  userQuote.value = "";
   posterForm.classList.remove('hidden')
+  
+  // needs code to set input values back to original
 }
 function showSavedPosters(){
   mainPosterSection.classList.add('hidden')
@@ -147,6 +158,7 @@ function backToMain(){
   mainPosterSection.classList.remove('hidden')
   savedPosterPage.classList.add('hidden')
   posterForm.classList.add('hidden')
+  posterGenerator()
 }
 
 function createPoster(imageURL, title, quote) {
@@ -159,4 +171,20 @@ function createPoster(imageURL, title, quote) {
 
 function showMyPoster(){
   event.preventDefault()
+
+  images.push(userImageUrl)
+  titles.push(userTitle)
+  quotes.push(userQuote)
+
+  imageURL = userImageUrl.value
+  title = userTitle.value
+  quote = userQuote.value
+  userMadePoster = createPoster()
+  // ideally would just call backToMain but wont work? syntax?
+  posterForm.classList.add('hidden')
+  mainPosterSection.classList.remove('hidden')
+
+  firstImage.src = imageURL
+  firstTitle.innerText = title
+  firstQuote.innerText = quote
 }
