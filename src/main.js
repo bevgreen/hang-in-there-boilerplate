@@ -168,7 +168,19 @@ function changeToPosterForm(){
 function showSavedPosters(){
   mainPosterSection.classList.add('hidden')
   savedPosterPage.classList.remove('hidden')
-}
+  savedPostersGrd.innerHTML = ''
+  
+  savedPosters.forEach(poster => {
+    var posterElement = document.createElement('div');
+    posterElement.classList.add('mini-poster');
+
+    posterElement.innerHTML = `
+      <img src="${poster.imageURL}" alt="${poster.title}">
+      <h2>${poster.title}</h2>
+      <h4>${poster.quote}</h4>`;
+    
+    savedPostersGrd.appendChild(posterElement)})
+  }
 
 function backToMain(){
   mainPosterSection.classList.remove('hidden')
@@ -193,6 +205,9 @@ function showMyPoster(){
   mainPosterSection.classList.remove('hidden')
 }
 
+function isDuplicatePoster(currentPoster){
+  return savedPosters.some(poster => poster.id === currentPoster.id)
+}
 function savePoster(){
   console.log("Save button clicked!");
   imageURL= firstImage.src
@@ -200,7 +215,15 @@ function savePoster(){
   quote= firstQuote.innerText
 
   currentPoster = createPoster(imageURL, title, quote)
+  var isDuplicate = isDuplicatePoster(currentPoster)
 
+  if (isDuplicate === false) {
+    // If it's not a duplicate, save the poster
+    savedPosters.push(currentPoster);
+    console.log('Poster saved:', currentPoster);
+  } else {
+    console.log('This poster has already been saved.')
   savedPosters.push(currentPoster)
   console.log(savedPosters);
-}
+  }}
+
