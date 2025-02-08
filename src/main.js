@@ -14,6 +14,8 @@ var showMyPosterBtn = document.querySelector('.make-poster')
 var userImageUrl = document.querySelector('#poster-image-url')
 var userTitle = document.querySelector('#poster-title')
 var userQuote = document.querySelector('#poster-quote')
+var savePosterBtn = document.querySelector('.save-poster')
+var savedPostersGrd = document.querySelector('.saved-posters-grid')
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
 var images = [
@@ -124,6 +126,7 @@ savedPostersBtn.addEventListener("click", showSavedPosters)
 TakeMeBackBtn.addEventListener("click", backToMain)
 BackToMainBtn.addEventListener("click", backToMain)
 showMyPosterBtn.addEventListener("click", showMyPoster)
+savePosterBtn.addEventListener("click", savePoster )
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -131,11 +134,24 @@ function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
 
+function createPoster(imageURL, title, quote) {
+  return {
+    id: Date.now(), 
+    imageURL: imageURL, 
+    title: title, 
+    quote: quote}
+}
+
 function posterGenerator(){
-  firstImage.src = images[getRandomIndex(images)];
-  firstTitle.innerText = titles[getRandomIndex(titles)];
-  firstQuote.innerText = quotes[getRandomIndex(quotes)]
-  currentPoster = createPoster
+  var imageURL = images[getRandomIndex(images)];
+  var title = titles[getRandomIndex(titles)];
+  var quote = quotes[getRandomIndex(quotes)];
+
+  firstImage.src = imageURL;
+  firstTitle.innerText = title;
+  firstQuote.innerText = quote;
+
+  currentPoster = createPoster(imageURL, title, quote)
 }
 
 function changeToPosterForm(){
@@ -153,6 +169,9 @@ function changeToPosterForm(){
 function showSavedPosters(){
   mainPosterSection.classList.add('hidden')
   savedPosterPage.classList.remove('hidden')
+  console.log(savedPosters)
+  savedPostersGrd.innerHTML = savedPosters
+
 }
 function backToMain(){
   mainPosterSection.classList.remove('hidden')
@@ -161,30 +180,21 @@ function backToMain(){
   posterGenerator()
 }
 
-function createPoster(imageURL, title, quote) {
-  return {
-    id: Date.now(), 
-    imageURL: imageURL, 
-    title: title, 
-    quote: quote}
-}
-
 function showMyPoster(){
   event.preventDefault()
 
-  images.push(userImageUrl)
-  titles.push(userTitle)
-  quotes.push(userQuote)
-
-  imageURL = userImageUrl.value
-  title = userTitle.value
-  quote = userQuote.value
-  userMadePoster = createPoster()
-  // ideally would just call backToMain but wont work? syntax?
-  posterForm.classList.add('hidden')
-  mainPosterSection.classList.remove('hidden')
-
+  var imageURL = userImageUrl.value
+  var title = userTitle.value
+  var quote = userQuote.value
+  userMadePoster = createPoster(imageURL, title, quote);)
+  
   firstImage.src = imageURL
   firstTitle.innerText = title
   firstQuote.innerText = quote
+
+  posterForm.classList.add('hidden')
+  mainPosterSection.classList.remove('hidden')
+}
+function savePoster(){
+  savedPosters.push(currentPoster)
 }
