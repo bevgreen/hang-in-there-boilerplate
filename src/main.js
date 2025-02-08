@@ -163,16 +163,13 @@ function changeToPosterForm(){
   userTitle.value = "";
   userQuote.value = "";
   posterForm.classList.remove('hidden')
-  
-  // needs code to set input values back to original
 }
+
 function showSavedPosters(){
   mainPosterSection.classList.add('hidden')
   savedPosterPage.classList.remove('hidden')
-  console.log(savedPosters)
-  savedPostersGrd.innerHTML = savedPosters
-
 }
+
 function backToMain(){
   mainPosterSection.classList.remove('hidden')
   savedPosterPage.classList.add('hidden')
@@ -186,8 +183,8 @@ function showMyPoster(){
   var imageURL = userImageUrl.value
   var title = userTitle.value
   var quote = userQuote.value
-  userMadePoster = createPoster(imageURL, title, quote);)
-  
+  userMadePoster = createPoster(imageURL, title, quote);
+
   firstImage.src = imageURL
   firstTitle.innerText = title
   firstQuote.innerText = quote
@@ -195,6 +192,15 @@ function showMyPoster(){
   posterForm.classList.add('hidden')
   mainPosterSection.classList.remove('hidden')
 }
+
 function savePoster(){
+  console.log("Save button clicked!");
+  imageURL= firstImage.src
+  title= firstTitle.innerText
+  quote= firstQuote.innerText
+
+  currentPoster = createPoster(imageURL, title, quote)
+
   savedPosters.push(currentPoster)
+  console.log(savedPosters);
 }
