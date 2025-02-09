@@ -19,6 +19,7 @@ var savedPostersGrd = document.querySelector('.saved-posters-grid')
 var unmotivPosterBtn = document.querySelector('.show-unmotiv')
 var unmotivPosterPage = document.querySelector('.unmotiv-posters')
 var backToMainBtn2 = document.querySelector('.back-to-main-2')
+var unmotivPostersGrd = document.querySelector('.unmotiv-posters-grid')
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
 var images = [
@@ -242,6 +243,7 @@ let unmotivationalPosters = [
 ];
 var savedPosters = [];
 var currentPoster;
+var cleanedUnmotivPosters = [];
 
 // event listeners go here 👇
 window.addEventListener("load", posterGenerator)
@@ -267,6 +269,16 @@ function createPoster(imageURL, title, quote) {
     imageURL: imageURL, 
     title: title, 
     quote: quote}
+}
+function cleanData(unmotivationalPosters){
+  unmotivationalPosters.forEach(poster => {
+    var imageURL = poster.img_url
+    var title = poster.name
+    var quote = poster.description
+    cleanUnmotivPoster = createPoster(imageURL, title, quote)
+    cleanedUnmotivPosters.push(cleanUnmotivPoster)
+  })
+  console.log(cleanedUnmotivPosters)
 }
 
 function posterGenerator(){
@@ -312,6 +324,19 @@ function showSavedPosters(){
 function showUnmotivPosters(){
   mainPosterSection.classList.add('hidden')
   unmotivPosterPage.classList.remove('hidden')
+  unmotivPostersGrd.innerHTML = ''
+
+  cleanData(unmotivationalPosters)
+  cleanedUnmotivPosters.forEach(poster => {
+    var posterElement = document.createElement('div');
+    posterElement.classList.add('mini-poster');
+
+    posterElement.innerHTML = `
+      <img src="${poster.imageURL}" alt="${poster.title}">
+      <h2>${poster.title}</h2>
+      <h4>${poster.quote}</h4>`;
+    
+    unmotivPostersGrd.appendChild(posterElement)})
 }
 
 function backToMain(){
