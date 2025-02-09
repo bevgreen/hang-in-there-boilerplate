@@ -16,6 +16,8 @@ var userTitle = document.querySelector('#poster-title')
 var userQuote = document.querySelector('#poster-quote')
 var savePosterBtn = document.querySelector('.save-poster')
 var savedPostersGrd = document.querySelector('.saved-posters-grid')
+var unmotivPosterBtn = document.querySelector('.show-unmotiv')
+var unmotivPosterPage = document.querySelector('.unmotiv-posters')
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
 var images = [
@@ -126,7 +128,8 @@ savedPostersBtn.addEventListener("click", showSavedPosters)
 TakeMeBackBtn.addEventListener("click", backToMain)
 BackToMainBtn.addEventListener("click", backToMain)
 showMyPosterBtn.addEventListener("click", showMyPoster)
-savePosterBtn.addEventListener("click", savePoster )
+savePosterBtn.addEventListener("click", savePoster)
+unmotivPosterBtn.addEventListener("click", showUnmotivPosters)
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -169,7 +172,7 @@ function showSavedPosters(){
   mainPosterSection.classList.add('hidden')
   savedPosterPage.classList.remove('hidden')
   savedPostersGrd.innerHTML = ''
-  
+
   savedPosters.forEach(poster => {
     var posterElement = document.createElement('div');
     posterElement.classList.add('mini-poster');
@@ -182,10 +185,16 @@ function showSavedPosters(){
     savedPostersGrd.appendChild(posterElement)})
   }
 
+function showUnmotivPosters(){
+  mainPosterSection.classList.add('hidden')
+  unmotivPosterPage.classList.remove('hidden')
+}
+
 function backToMain(){
   mainPosterSection.classList.remove('hidden')
   savedPosterPage.classList.add('hidden')
   posterForm.classList.add('hidden')
+  unmotivPosterPage.add('hidden')
   posterGenerator()
 }
 
