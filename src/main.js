@@ -399,8 +399,20 @@ function deletePoster(event) {
     const posterElement = event.target.closest('.mini-poster');
   
     if (posterElement) {
-      console.log('Double-clicked poster:', posterElement); // Log the poster that was clicked
-      posterElement.remove(); // Remove the poster from the DOM
+      console.log('Double-clicked poster:', posterElement) // Log the poster that was clicked
+      
+    // Get the poster title
+      var title = posterElement.querySelector('h2').innerText;
+        
+
+    // Filter out the poster from the cleanedUnmotivPosters array by setting it equal to all OTHER POSTERS
+    
+      cleanedUnmotivPosters = cleanedUnmotivPosters.filter((poster) => 
+        !(poster.title === title)
+    )
+
+      console.log('Poster removed from array:')
+        posterElement.remove()
     }
   }
 
