@@ -20,6 +20,7 @@ var unmotivPosterBtn = document.querySelector('.show-unmotiv')
 var unmotivPosterPage = document.querySelector('.unmotiv-posters')
 var backToMainBtn2 = document.querySelector('.back-to-main-2')
 var unmotivPostersGrd = document.querySelector('.unmotiv-posters-grid')
+
 // we've provided you with some data to work with 👇
 // tip: you can tuck this data out of view with the dropdown found near the line number where the variable is declared 
 var images = [
@@ -256,6 +257,8 @@ backToMainBtn2.addEventListener("click", backToMain)
 showMyPosterBtn.addEventListener("click", showMyPoster)
 savePosterBtn.addEventListener("click", savePoster)
 unmotivPosterBtn.addEventListener("click", showUnmotivPosters)
+unmotivPostersGrd.addEventListener("dblclick", deletePoster)
+  
 
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
@@ -270,6 +273,7 @@ function createPoster(imageURL, title, quote) {
     title: title, 
     quote: quote}
 }
+
 function cleanData(unmotivationalPosters){
   unmotivationalPosters.forEach(poster => {
     var imageURL = poster.img_url
@@ -318,8 +322,9 @@ function showSavedPosters(){
       <h2>${poster.title}</h2>
       <h4>${poster.quote}</h4>`;
     
-    savedPostersGrd.appendChild(posterElement)})
-  }
+    savedPostersGrd.appendChild(posterElement)
+  })
+}
 
 function showUnmotivPosters(){
   mainPosterSection.classList.add('hidden')
@@ -336,7 +341,9 @@ function showUnmotivPosters(){
       <h2>${poster.title}</h2>
       <h4>${poster.quote}</h4>`;
     
-    unmotivPostersGrd.appendChild(posterElement)})
+    unmotivPostersGrd.appendChild(posterElement)
+  })
+  console.log('unmoitvational posters displayed')
 }
 
 function backToMain(){
@@ -366,6 +373,7 @@ function showMyPoster(){
 function isDuplicatePoster(currentPoster){
   return savedPosters.some(poster => poster.id === currentPoster.id)
 }
+
 function savePoster(){
   console.log("Save button clicked!");
   imageURL= firstImage.src
@@ -381,7 +389,18 @@ function savePoster(){
     console.log('Poster saved:', currentPoster);
   } else {
     console.log('This poster has already been saved.')
-  savedPosters.push(currentPoster)
-  console.log(savedPosters);
-  }}
+    savedPosters.push(currentPoster)
+    console.log(savedPosters);  
+}}
+
+function deletePoster(event) {
+  console.log('dbl click event triggered');
+    //Check if the target is a .mini-poster class element
+    const posterElement = event.target.closest('.mini-poster');
+  
+    if (posterElement) {
+      console.log('Double-clicked poster:', posterElement); // Log the poster that was clicked
+      posterElement.remove(); // Remove the poster from the DOM
+    }
+  }
 
